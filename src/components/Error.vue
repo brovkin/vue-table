@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col s4">
+        <div class="col s12">
             <div @click="refresh" class="card-panel error red lighten-3 white-text">
                 {{error}} <i class="refresh material-icons">refresh</i>
             </div>
@@ -18,7 +18,6 @@
         },
         methods: {
           refresh() {
-            console.log('refresh');
             location.reload();
           }
         }
@@ -42,7 +41,6 @@
     }
 
     .refresh {
-
         transition: .3s all ease-in-out;
     }
 </style>

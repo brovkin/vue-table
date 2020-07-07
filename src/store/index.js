@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {getProducts} from "../assets/request";
+import {getProducts, deleteProducts} from "../assets/request";
 
 Vue.use(Vuex)
 
@@ -35,7 +35,8 @@ export default new Vuex.Store({
           return {
             ...item,
             display: false,
-            checked: false
+            checked: false,
+            isDeleted: false
           }
         });
     },
@@ -43,22 +44,40 @@ export default new Vuex.Store({
       state.errorMessage = value.error;
       state.isError = true;
     },
-    loading(state) {
-      state.isLoading = false
+    loading(state, value) {
+      state.isLoading = value;
     },
+
+    isDeleteItem(state, id) {
+      const products = state.products.concat();
+      state.products = products.map(item => {
+        if (item.id === id) {
+          return {...item, isDeleted: true}
+        }
+        return item;
+      })
+    },
+
+    cancelDeleteItem(state, id) {
+      const products = state.products.concat();
+      state.isError = false;
+      state.products = products.map(item => {
+        if (item.id === id) {
+          return {...item, isDeleted: false}
+        }
+        return item;
+      })
+    },
+
     deleteItem(state, id) {
+      state.isError = false;
       const products = state.products.concat();
       state.products = products.filter(item => item.id !== id);
     },
-    allChecked(state) {
+    allChecked(state, value) {
       const products = state.products.concat();
-      console.log(products);
-
       state.products = products.map(item => {
-        return {
-          ...item,
-          checked: !item.checked
-        }
+        return {...item, checked: value}
       })
     },
     deleteChecked(state) {
@@ -86,13 +105,12 @@ export default new Vuex.Store({
           .map(item => {
             return {...item, active: false, sorted: false}
           })
-      ]
+      ];
 
       state.sorting.name = name;
     },
 
     sortingByOrder(state, name) {
-
       let order = state.sorting.order;
 
       order === 'asc' ? order = 'desc' : order = 'asc';
@@ -112,19 +130,29 @@ export default new Vuex.Store({
     },
 
     modalChange(state, value) {
-      console.log(value);
       state.modal = value;
-    }
-
+    },
   },
   actions: {
    async getData({commit}) {
      try {
        const data = await getProducts();
-       commit('loading');
+       commit('loading', false);
        commit('getData', data);
      } catch(e) {
-       commit('loading');
+       commit('loading', false);
+       commit('catchError', e);
+     }
+   },
+
+   async deleteItem({commit}, id) {
+     try {
+       commit('loading', true);
+       await deleteProducts();
+       commit('loading', false);
+       commit('deleteItem', id);
+     } catch(e) {
+       commit('loading', false);
        commit('catchError', e);
      }
    }

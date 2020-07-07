@@ -1,18 +1,17 @@
 <template>
-    <div class="modal__wrapper col s2">
+    <div class="modal__wrapper col">
         <template>
             <button v-if="modal" @click="handleModal(false)" class="modal__trigger-btn btn-flat">closed<i class="material-icons">close</i></button>
             <button v-else @click="handleModal(true)" class="modal__trigger-btn btn-flat">{{countSelected}} columns selected <i class="material-icons">arrow_drop_down</i></button>
         </template>
-
         <div v-if="modal" class="modal__block">
             <div class="modal__block-wrapper">
                 <label class="modal__label modal__label-first">
-                    <input type="checkbox" class="filled-in" @change="selectedAllColumns" :checked="checkAllSelected" />
+                    <input type="checkbox" class="checkbox-green filled-in" @change="selectedAllColumns" :checked="checkAllSelected" />
                     <span>Select All</span>
                 </label>
                 <label class="modal__label" v-for="checkbox of sortData">
-                    <input type="checkbox" class="filled-in" v-model="checkbox.selected" />
+                    <input type="checkbox" class="checkbox-green filled-in" v-model="checkbox.selected" />
                     <span style="text-transform: capitalize">{{checkbox.title}}</span>
                 </label>
             </div>
@@ -34,8 +33,6 @@
           checkAllSelected() {
             const length = this.sortData.filter(item => item.selected).length;
 
-            console.log(length);
-
             return length === 6;
           },
         },
@@ -44,7 +41,7 @@
             return this.$store.commit('selectedAllColumns', event.target.checked);
           },
           handleModal(value) {
-              this.$store.commit('modalChange', value);
+            this.$store.commit('modalChange', value);
           }
         },
     }
@@ -74,7 +71,8 @@
             border-radius: 4px;
             padding: 1rem .5rem;
             top: 50px;
-
+            left: -20px;
+            min-width: 250px;
 
             &-wrapper {
                 padding: .5rem;

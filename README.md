@@ -1,19 +1,33 @@
-# vue-table
+# Vue Table UI :watermelon:
 
-## Project setup
-```
-npm install
-```
+Таблица пищевой ценности 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- Возможность добавления/удаления столбцов
+- Асинхронное удаление блюд
+- Массовое удаление блюд
+- Сортировка по возрастанию/убыванию
+- Возможность выбирать количество блюд на странице
+- Переключение страниц
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Стек: Vue / Vuex / Materialize.css
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Установка пакетов
+
+`npm install`
+
+### Создать build
+
+`npm run build`
+
+### Запуск
+
+`npm run serve`
+
+## Приложение
+[Vue Table UI :watermelon:](http://vue-table.brozabro.ru/) 
+
+## Контакты 🦜
+
+- Почта: brovkin.on@gmail.com 
+- Telegram: https://t.me/brovkin_artem
+- Cайт-портфолио: https://brozabro.ru

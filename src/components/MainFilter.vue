@@ -9,11 +9,9 @@
                         @click="sortingByName(btn.id)"
                         :disabled="!btn.selected"
                 >{{btn.title}}</button>
-
-
             </div>
             <div class="col">
-                <button class="btn green" @click="deleteChecked">Delete ({{checkedItems}})</button>
+                <button class="main-filter__delete-btn btn green" @click="deleteChecked">Delete ({{checkedItems}})</button>
             </div>
             <div class="col">
                 <select @change="itemsPerPage">
@@ -22,9 +20,7 @@
                     <option value="20">20 Per Page</option>
                 </select>
             </div>
-            <div class="col s2">
-<!--                PAGE: {{currentPage}}-->
-<!--                inc: {{Math.ceil(this.products.length / this.perPage)}}-->
+            <div class="col">
                 <div class="pagination-block">
                     <button class="btn btn-small green pagination-block__btn" :disabled="this.currentPage === 1" @click="decrementPage"><i class="material-icons">chevron_left</i></button>
                         <div class="pagination-block__center">
@@ -35,9 +31,7 @@
                     <button class="btn btn-small green pagination-block__btn" :disabled="this.currentPage === Math.ceil(this.products.length / this.perPage)" @click="incrementPage"><i class="material-icons">chevron_right</i></button>
                 </div>
             </div>
-
             <SelectColumns/>
-
         </div>
     </div>
 </template>
@@ -103,10 +97,24 @@
         align-items: center;
         justify-content: space-between;
         padding-top: 1rem;
+        flex-flow: row wrap;
+
+        @media (max-width: 1280px) {
+            align-items: flex-start;
+
+            & .col {
+                margin: 1rem;
+            }
+        }
 
         &__sorting-title {
             margin-right: 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        &__delete-btn {
+            min-width: 100px;
         }
     }
 
@@ -137,6 +145,4 @@
             background-color: transparent;
         }
     }
-
-
 </style>
